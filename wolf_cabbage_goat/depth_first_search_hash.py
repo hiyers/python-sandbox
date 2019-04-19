@@ -10,5 +10,9 @@ def depth_first_search(problem,node,visited=set()):
     #base case
 
     for n_succ in problem.succ(node):
+        sol=depth_first_search(problem,n_succ,visited)
+        if sol:
+            #first path is returned
+            return [node] + sol
         
     

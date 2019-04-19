@@ -4,8 +4,12 @@
 import search    # get the interface
 
 def other_side(left_right):
-    if left_right == 'left': return 'right'
-    elif left_right == 'right': return 'left'
+    if left_right == 'left':
+        #print('move right')
+        return 'right'
+    elif left_right == 'right':
+        #print('move left')
+        return 'left'
 
     
 def safe(node):
@@ -34,7 +38,7 @@ class Wolf_Cabbage_Goat(search.Nodes):
                  # define successor    
                  def succ(self,node):
                      #for all possible travelers including none
-                     print('trying to find successor')
+                     #print('trying to find successor',node)
                      for traveler in list(node.keys()) + ['']:
                          if traveler == 'farmer':
                              continue
@@ -42,12 +46,18 @@ class Wolf_Cabbage_Goat(search.Nodes):
                          new_node = node.copy()
                          # create as safety copy
                          # if somebody wants to travel and farmer is on same side, do it
+                         #print('traveler',traveler)
+                         #print('new_node[travler]',new_node[traveler])
                          if traveler and new_node[traveler] == new_node['farmer']:
-                             new_node['farmer'] == other_side(new_node[traveler])
+                             #print(traveler,' will move to other side')
+                             new_node[traveler] = other_side(new_node[traveler])
+                             #print('after move new_node[travler]',new_node[traveler])
 
                          # the farmer always travels
-                         new_node['farmer'] == other_side(new_node['farmer'])
+                         new_node['farmer'] = other_side(new_node['farmer'])
+                         #print('farmer travels',new_node)
     
                          #after a trip, the new state is ok if no one gets eaten
                          if safe(new_node):
+                             #print('this one is safe',new_node)
                              yield new_node
